@@ -28,17 +28,14 @@ const ballRadius = 5;
 let speedY;
 let speedX;
 let trajectoryX;
-let computerSpeed;
 
 // Change Mobile Settings
 if (isMobile.matches) {
   speedY = -2;
   speedX = speedY;
-  computerSpeed = 4;
 } else {
   speedY = -1;
   speedX = speedY;
-  computerSpeed = 3;
 }
 
 // Score
@@ -131,7 +128,6 @@ function ballBoundaries() {
         // Max Speed
         if (speedY < -5) {
           speedY = -5;
-          computerSpeed = 6;
         }
       }
       speedY = -speedY;
@@ -163,16 +159,6 @@ function ballBoundaries() {
   }
 }
 
-// Computer Movement
-function computerAI() {
-  if (playerMoved) {
-    if (paddleTopX + paddleDiff < ballX) {
-      paddleTopX += computerSpeed;
-    } else {
-      paddleTopX -= computerSpeed;
-    }
-  }
-}
 
 function showGameOverEl(winner) {
   // Hide Canvas
@@ -209,7 +195,6 @@ function animate() {
   renderCanvas();
   ballMove();
   ballBoundaries();
-  computerAI();
   gameOver();
   if (!isGameOver) {
     window.requestAnimationFrame(animate);
