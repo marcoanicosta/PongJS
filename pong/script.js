@@ -215,6 +215,7 @@ function startGame() {
   computerScore = 0;
   ballReset();
   createCanvas();
+  socket.emit('ready')
   animate();
   //setInterval(animate, 1000/60);
   canvas.addEventListener('mousemove', (e) => {
@@ -234,3 +235,7 @@ function startGame() {
 
 // On Load
 startGame();
+
+socket.on('connect', () => {
+  console.log('connected as..', socket.id);
+})
