@@ -9,6 +9,7 @@ const screenWidth = window.screen.width;
 const canvasPosition = screenWidth / 2 - width / 2;
 const isMobile = window.matchMedia('(max-width: 600px)');
 const gameOverEl = document.createElement('div');
+let isReferee = false;
 
 // Paddle
 const paddleHeight = 10;
@@ -202,8 +203,8 @@ function animate() {
   
 }
 
-// Start Game, Reset Everything
-function startGame() {
+// Load Game, Reset Everything
+function loadGame() {
   if (isGameOver && !isNewGame) {
       body.removeChild(gameOverEl);
       canvas.hidden = false;
@@ -216,6 +217,9 @@ function startGame() {
   ballReset();
   createCanvas();
   socket.emit('ready')
+}
+
+function startGame() {
   animate();
   //setInterval(animate, 1000/60);
   canvas.addEventListener('mousemove', (e) => {
@@ -234,8 +238,16 @@ function startGame() {
 }
 
 // On Load
-startGame();
+loadGame();
 
 socket.on('connect', () => {
   console.log('connected as..', socket.id);
 })
+
+socket.on('startGame', (refereeID) => {
+  console.log('Referee is', refereeID);
+
+  isReferee = socket.id === refereeID;
+  
+  startGame();
+});;
