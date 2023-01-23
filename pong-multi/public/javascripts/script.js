@@ -94,7 +94,7 @@ function ballReset() {
   socket.emit('ballMove', {
     ballX,
     ballY,
-    score
+    score,
   });
 }
 
@@ -109,7 +109,7 @@ function ballMove() {
   socket.emit('ballMove', {
     ballX,
     ballY,
-    score
+    score,
   });
 }
 
@@ -174,7 +174,7 @@ function animate() {
   window.requestAnimationFrame(animate);
 }
 
-// Start Game, Reset Everything
+// Load Game, Reset Everything
 function loadGame() {
   createCanvas();
   renderIntro();
@@ -194,7 +194,7 @@ function startGame() {
       paddleX[paddleIndex] = width - paddleWidth;
     }
     socket.emit('paddleMove', {
-      xPosition: paddleX[paddleIndex]
+      xPosition: paddleX[paddleIndex],
     });
     // Hide Cursor
     canvas.style.cursor = 'none';
@@ -214,7 +214,7 @@ socket.on('startGame', (refereeID) => {
   isReferee = socket.id === refereeID;
   
   startGame();
-});;
+});
 
 socket.on('paddleMove', (paddleData) => {
   //Toggle 1 into 0, and 0 to 1
